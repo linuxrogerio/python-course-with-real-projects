@@ -25,7 +25,7 @@ def par_impar(numero):
     return f'{numero} é ímpar'
 
 
-outro_par_impar = par_impar
+outro_par_impar = par_impar 
 dois_e_par = outro_par_impar(2)
 print(dois_e_par)
 print(par_impar(3))
