@@ -32,6 +32,7 @@ def desfazer(tarefas, tarefas_refazer):
     print(f'Tarefa {tarefa=} removida da lista de tarefas.')
     tarefas_refazer.append(tarefa)
     print("")  # linha em branco
+    listar(tarefas)
 
 
 def refazer(tarefas, tarefas_refazer):
@@ -43,6 +44,7 @@ def refazer(tarefas, tarefas_refazer):
     print(f'Tarefa {tarefa=} adicionada na lista de tarefas.')
     tarefas.append(tarefa)
     print("")  # linha em branco
+    listar(tarefas)
 
 
 def adicionar(tarefa, tarefas):
@@ -50,12 +52,12 @@ def adicionar(tarefa, tarefas):
     if not tarefa:
         print('Você não digitou uma tarefa.')
         return
-    
+
     print(f"Tarefa {tarefa=} adicionada na lista de tarefas.")
     tarefas.append(tarefa)
     print(f'Tarefa "{tarefa}" adicionada com sucesso!')
     print("")  # linha em branco
-
+    listar(tarefas)
 
 # main call
 
@@ -66,24 +68,35 @@ while True:
     print('\nComandos: listar, desfazer, refazer, limpar ou sair')
     tarefa = input('\nDigite uma tarefa ou comando: ')
 
-    if not tarefa:
-        print("Tarefa ou comando inválid(a|o)")
-        continue
-    elif tarefa == "listar":
-        listar(tarefas)
-        continue
-    elif tarefa == "desfazer":
-        desfazer(tarefas, tarefas_refazer)
-        listar(tarefas)
-        continue
-    elif tarefa == "refazer":
-        refazer(tarefas, tarefas_refazer)
-        listar(tarefas)
-        continue
-    elif tarefa == "limpar":
-        os.system("clear")
-        continue
-    else:
-        adicionar(tarefa, tarefas)
-        listar(tarefas)
-        continue
+    comandos = {
+        "listar": lambda: listar(tarefas),
+        "desfazer": lambda: desfazer(tarefas, tarefas_refazer),
+        "refazer": lambda: refazer(tarefas, tarefas_refazer),
+        "limpar": lambda: os.system("clear"),
+        "adicionar": lambda: adicionar(tarefa, tarefas),
+    }
+
+    comando = comandos.get(tarefa) if comandos.get(tarefa) is not None else comandos["adicionar"]
+    comando()
+
+    # if not tarefa:
+    #     print("Tarefa ou comando inválid(a|o)")
+    #     continue
+    # elif tarefa == "listar":
+    #     listar(tarefas)
+    #     continue
+    # elif tarefa == "desfazer":
+    #     desfazer(tarefas, tarefas_refazer)
+    #     listar(tarefas)
+    #     continue
+    # elif tarefa == "refazer":
+    #     refazer(tarefas, tarefas_refazer)
+    #     listar(tarefas)
+    #     continue
+    # elif tarefa == "limpar":
+    #     os.system("clear")
+    #     continue
+    # else:
+    #     adicionar(tarefa, tarefas)
+    #     listar(tarefas)
+    #     continue
